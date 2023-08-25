@@ -20,13 +20,12 @@ RUN apt-get update \
     php8.0-imagick \
     php8.0-opcache \
     php8.0-zip \
+    php-xdebug \
     php-pear php8.0-dev libmcrypt-dev gcc make autoconf libc-dev pkg-config \
     && pecl install mcrypt-1.0.4 \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* \
 
-# Install xDebug
-RUN pecl install xdebug \
-    docker-php-ext-enable xdebug
+RUN docker-php-ext-enable xdebug
 
 # Install Composer
 RUN wget https://getcomposer.org/installer -O - -q \

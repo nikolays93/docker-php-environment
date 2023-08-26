@@ -1,14 +1,13 @@
 # PHP Dockerfile
 #
-# Package openssh-client is required for deployer.
 # Packages wget git unzip is required for xdebug install
+
 FROM phpdockerio/php:8.0-fpm
 
 # Install required base packages
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
     wget git unzip \
-    openssh-client \
     php8.0-memcached \
     php8.0-memcache \
     php8.0-mbstring \
@@ -20,12 +19,13 @@ RUN apt-get update \
     php8.0-imagick \
     php8.0-opcache \
     php8.0-zip \
-    php-xdebug \
-    php-pear php8.0-dev libmcrypt-dev gcc make autoconf libc-dev pkg-config \
+    php8.0-pear php8.0-dev libmcrypt-dev gcc make autoconf libc-dev pkg-config \
     && pecl install mcrypt-1.0.4 \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* \
 
-RUN docker-php-ext-enable xdebug
+# Install xDebug
+#RUN pecl install xdebug \
+#    docker-php-ext-enable xdebug
 
 # Install Composer
 RUN wget https://getcomposer.org/installer -O - -q \
